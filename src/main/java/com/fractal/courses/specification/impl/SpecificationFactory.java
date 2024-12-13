@@ -8,22 +8,22 @@ import com.fractal.courses.specification.Specification;
 public class SpecificationFactory implements BookSpecificationFactory {
     private static final String UNKNOWN_FIELD = "Unknown book field. ";
 
-    public Specification create(BookTag bookTag) throws UnknownFieldException {
+    public <T> Specification<T> create(BookTag bookTag) throws UnknownFieldException {
         if (bookTag == null) {
             throw new UnknownFieldException("Null book tag received");
         }
         switch (bookTag) {
             case TITLE -> {
-                return new TitleSpecification();
+                return (Specification<T>) new TitleSpecification();
             }
             case AUTHOR -> {
-                return new AuthorSpecification();
+                return (Specification<T>) new AuthorSpecification();
             }
             case GENRE -> {
-                return new GenreSpecification();
+                return (Specification<T>) new GenreSpecification();
             }
             case YEAR -> {
-                return new YearSpecification();
+                return (Specification<T>) new YearSpecification();
             }
             default -> throw new UnknownFieldException(UNKNOWN_FIELD);
         }

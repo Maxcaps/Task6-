@@ -3,6 +3,7 @@ package com.fractal.courses.dao;
 import com.fractal.courses.model.Book;
 import com.fractal.courses.model.BookTag;
 
+import java.util.List;
 import java.util.Set;
 
 public interface BookDao {
@@ -14,7 +15,7 @@ public interface BookDao {
 
     <T> Set<Book> findByTag(BookTag bookTag, T value);
 
-    void sortByTag(BookTag bookTag);
+    List<Book> sortByTag(BookTag bookTag);
 
     Set<Book> getBookSet();
 }

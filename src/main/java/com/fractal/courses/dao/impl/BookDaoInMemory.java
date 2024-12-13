@@ -18,7 +18,6 @@ import java.util.Set;
 public class BookDaoInMemory implements BookDao {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
     private final Set<Book> bookSet = new HashSet<>();
-    private Set<Book> books = new HashSet<>();
     private SpecificationFactory specificationFactory = new SpecificationFactory();
 
     @Override
@@ -27,29 +26,20 @@ public class BookDaoInMemory implements BookDao {
             throw new UnknownFieldException("Unknown field type received");
         }
         Specification<T> currentSpec = specificationFactory.create(bookTag);
-        Set<Book> findResultBook = currentSpec.find(books, value);
+        Set<Book> findResultBook = currentSpec.find(bookSet, value);
         if (findResultBook.isEmpty()) {
-            LOGGER.info("There is no books with this tag: " + value);
+            LOGGER.info("There is no bookSet with this tag: " + value);
         }
         return findResultBook;
     }
 
     @Override
-    public void sortByTag(BookTag bookTag) throws UnknownFieldException {
+    public List<Book> sortByTag(BookTag bookTag) throws UnknownFieldException {
         if (bookTag == null) {
             throw new UnknownFieldException("Unknown field type received");
         }
         Specification<?> currentSpec = specificationFactory.create(bookTag);
-        List<Book> sortedBooks = currentSpec.sort(books);
-        books = new HashSet<>(sortedBooks);
-        if (sortedBooks.isEmpty()) {
-            LOGGER.info("No books to sort by tag: " + bookTag);
-        } else {
-            LOGGER.info("Books sorted by tag: " + bookTag);
-            for (Book book : sortedBooks) {
-                LOGGER.info(book.toString());
-            }
-        }
+        return currentSpec.sort(bookSet);
     }
 
     @Override
@@ -58,7 +48,7 @@ public class BookDaoInMemory implements BookDao {
     }
 
     public void addBook(Book book) {
-        boolean isAlreadyExist = books.add(book);
+        boolean isAlreadyExist = bookSet.add(book);
         if (isAlreadyExist) {
             LOGGER.info("com.fractal.courses.model.Book added" + book);
         } else {
@@ -67,7 +57,7 @@ public class BookDaoInMemory implements BookDao {
     }
 
     public void removeBook(Book book) {
-        boolean isDeleted = books.remove(book);
+        boolean isDeleted = bookSet.remove(book);
         if (isDeleted) {
             LOGGER.info("Removed book" + book);
         } else {
@@ -76,11 +66,11 @@ public class BookDaoInMemory implements BookDao {
     }
 
     public void printAllBooks() {
-        if (books.isEmpty()) {
+        if (bookSet.isEmpty()) {
             LOGGER.info("No book available.");
         } else {
-            LOGGER.info("Books in collection:");
-            for (Book book : books) {
+            LOGGER.info("bookSet in collection:");
+            for (Book book : bookSet) {
                 LOGGER.info(book.toString());
             }
         }
