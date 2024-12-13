@@ -3,48 +3,40 @@ package com.fractal.courses.model;
 import java.util.Objects;
 
 public class Book {
-    private String title;
-    private String author;
-    private String  genre;
-    private int year;
+    private final String title;
+    private final String author;
+    private final String genre;
+    private final int year;
 
-    public Book (String title, String author, String genre, int year) {
+    public Book(String title, String author, String genre, int year) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.year = year;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getTitle () {
+
+    public String getTitle() {
         return title;
     }
 
-    public void setAuthor(String author){
-        this.author = author;
-    }
-    public  String getAuthor () {
+
+    public String getAuthor() {
         return author;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-    public String getGenre () {
+
+    public String getGenre() {
         return genre;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
+
     public int getYear() {
         return year;
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;

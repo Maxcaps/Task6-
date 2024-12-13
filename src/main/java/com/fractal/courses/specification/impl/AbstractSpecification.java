@@ -19,19 +19,15 @@ public abstract class AbstractSpecification<T> implements Specification<T> {
         return result;
     }
 
+
     @Override
-    public Set<Book> sort(Set<Book> books) {
-        // Преобразуем Set в List
+    public List<Book> sort(Set<Book> books) {
         List<Book> bookList = new ArrayList<>(books);
-        // Получаем компаратор
-        Comparator<Book> comparator = getComparator();
-        // Сортируем список
-        bookList.sort(comparator);
-        // Преобразуем обратно в Set (в зависимости от типа Set, будет либо LinkedHashSet, либо TreeSet для сохранения порядка)
-        // Возвращаем отсортированный Set
-        return new HashSet<>(bookList);
+        bookList.sort(getComparator());
+        return bookList;
     }
 
-    public abstract boolean match (Book book, T value);
+    public abstract boolean match(Book book, T value);
+
     public abstract Comparator<Book> getComparator();
 }
